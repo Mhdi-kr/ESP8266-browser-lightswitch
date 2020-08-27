@@ -7,10 +7,30 @@ String html_1 = R"=====(
  <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
  <meta charset='utf-8'>
  <style>
-  body {font-size:140%;} 
-  #main {display: table; margin: auto;  padding: 0 10px 0 10px; } 
-  h2 {text-align:center; } 
-  #LED_button { padding:10px 10px 10px 10px; width:100%;  background-color: #50FF50; font-size: 120%;}
+body {
+  background-color: #ededed;
+  height: 100vh;
+  overflow:hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+svg {
+  opacity: 0.2
+}
+.box {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  height: 250px;
+  background-color: #ededed;
+  border-radius: 80px;
+  -webkit-box-shadow: 
+     10px 20px 35px -3px rgba(0,0,0,0.1) , 
+    -10px -20px 35px -3px rgba(255,255,255,1);
+}
  </style>
  
 <script>
@@ -51,19 +71,22 @@ function ajaxLoad(ajaxURL)
  
 </script>
  
- <title>LED Control</title>
+ <title>ESP Home</title>
 </head>
 <body>
- <div id='main'>
-  <h2>LED Control</h2>
 )====="; 
  
 String html_2 = R"=====(  
-  <input type="button" id = "LED_button" onclick="switchLED()" value="Turn on the LED"       /> 
+  <div class="box" id = "LED_button" onclick="switchLED()">
+    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-lightning-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" d="M11.251.068a.5.5 
+  0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
+  </svg>
+  </div>
+ 
 )=====";
  
 String html_4 = R"=====(    
- </div>
 </body>
 </html>
 )====="; 
@@ -98,7 +121,7 @@ void setup()
     while (WiFi.status() != WL_CONNECTED) 
     {
         Serial.print(".");
-        delay(500);
+        delay(500);   
     }
  
     Serial.println("");
@@ -138,7 +161,7 @@ void loop()
         client.print( header );
         client.print( html_1 );   
         client.print( html_2 ); 
-        client.print( html_4 ); 
+        client.print( html_4 );  
         delay(5);
     }
  
